@@ -1,0 +1,14 @@
+Level 1 ROS 2 Navigation Assignment — Bug Log
+
+1. File: testbed_description/CMakeLists.txt
+   Symptom:
+   The initial colcon build failed with a CMake parse error at line 24.
+
+   Root cause:
+   The ament_package macro was invoked without parentheses.
+
+   Correction:
+   Changed ament_package to ament_package().
+
+   Verification:
+   The workspace subsequently built all three starter packages successfully.
