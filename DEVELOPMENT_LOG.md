@@ -71,3 +71,31 @@ Do not label an issue as fixed until its correction has been tested and the resu
 - Reinitialized AMCL after simulation startup and confirmed a pose estimate near the expected spawn position.
 - Observed successful navigation with reduced pose flickering after the sensor-range change.
 - Gazebo's intermittent segmentation fault and timestamp-related warnings remain unresolved.
+
+## Phase 9 — Cross-machine validation (2026-10-16)
+
+- Tested commit `f1f18dc` on a college PC running Ubuntu 22.04.5,
+  ROS 2 Humble and Gazebo Classic 11.10.2.
+- `rosdep` reported all dependencies installed; all four workspace
+  packages built successfully.
+- Without the GDB wrapper, Gazebo remained alive for more than 30 seconds.
+  Localization accepted the initial pose near `(0, 5)`, and a 2D Goal
+  Pose completed successfully.
+- The laptop has also had a stable GDB-wrapped session after earlier
+  `gzserver` exit-code `-11` crashes. The cause of those crashes remains
+  unconfirmed; success on the college PC does not isolate the cause.
+
+
+## Phase 10 — Final laptop navigation validation (2026-10-16)
+
+- Rebuilt all four workspace packages successfully and checked the
+  individual launch files and combined launch arguments.
+- Launched the simulation with the persistent GDB wrapper.
+- Started localization using the canonical map in `testbed_bringup`
+  and the dedicated `testbed_navigation/config/amcl_params.yaml`.
+- Initialized the approximate robot pose near `(0, 5)`.
+- Sent a 2D Goal Pose. The controller logged `Reached the goal!`
+  and the BT navigator logged `Goal succeeded`.
+- A later LiDAR message-filter warning reported an older timestamp
+  than the TF transform cache. Navigation succeeded, but this warning
+  and the earlier intermittent Gazebo crash remain unresolved.

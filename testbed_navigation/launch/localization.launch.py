@@ -9,6 +9,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     map_yaml = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
+    amcl_params_file = LaunchConfiguration('amcl_params_file')
 
     default_map = PathJoinSubstitution([
         FindPackageShare('testbed_bringup'),
@@ -18,6 +19,11 @@ def generate_launch_description():
     default_params = PathJoinSubstitution([
         FindPackageShare('testbed_navigation'),
         'config', 'nav2_params.yaml'
+    ])
+
+    default_amcl_params = PathJoinSubstitution([
+        FindPackageShare('testbed_navigation'),
+        'config', 'amcl_params.yaml'
     ])
 
     map_server = Node(
@@ -36,7 +42,7 @@ def generate_launch_description():
         executable='amcl',
         name='amcl',
         output='screen',
-        parameters=[params_file, {'use_sim_time': use_sim_time}],
+        parameters=[amcl_params_file, {'use_sim_time': use_sim_time}],
     )
 
     lifecycle_manager = Node(
@@ -55,6 +61,7 @@ def generate_launch_description():
         DeclareLaunchArgument('use_sim_time', default_value='true'),
         DeclareLaunchArgument('map', default_value=default_map),
         DeclareLaunchArgument('params_file', default_value=default_params),
+        DeclareLaunchArgument('amcl_params_file', default_value=default_amcl_params),
         map_server,
         amcl,
         lifecycle_manager,

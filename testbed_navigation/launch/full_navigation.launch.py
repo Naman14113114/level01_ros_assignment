@@ -13,6 +13,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     map_yaml = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
+    amcl_params_file = LaunchConfiguration('amcl_params_file')
     rviz_config = LaunchConfiguration('rvizconfig')
 
     simulation = IncludeLaunchDescription(
@@ -40,6 +41,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time,
             'map': map_yaml,
             'params_file': params_file,
+            'amcl_params_file': amcl_params_file,
         }.items(),
     )
 
@@ -69,6 +71,12 @@ def generate_launch_description():
         'nav2_params.yaml',
     ])
 
+    default_amcl_params = PathJoinSubstitution([
+        FindPackageShare('testbed_navigation'),
+        'config',
+        'amcl_params.yaml',
+    ])
+
     default_rviz = PathJoinSubstitution([
         FindPackageShare('testbed_description'),
         'rviz',
@@ -79,6 +87,7 @@ def generate_launch_description():
         DeclareLaunchArgument('use_sim_time', default_value='true'),
         DeclareLaunchArgument('map', default_value=default_map),
         DeclareLaunchArgument('params_file', default_value=default_params),
+        DeclareLaunchArgument('amcl_params_file', default_value=default_amcl_params),
         DeclareLaunchArgument('rvizconfig', default_value=default_rviz),
 
         # Start simulation first, then localization, then navigation.

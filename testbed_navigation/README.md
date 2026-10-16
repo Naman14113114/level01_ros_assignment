@@ -10,7 +10,8 @@ Nav2 components directly instead of calling nav2_bringup.
 - launch/navigation.launch.py: planner, controller, smoother,
   behavior server, BT navigator and lifecycle manager.
 - launch/full_navigation.launch.py: convenience orchestration launch.
-- config/nav2_params.yaml: Nav2 and localization parameters.
+- config/amcl_params.yaml: AMCL localization parameters.
+- config/nav2_params.yaml: map-server and navigation parameters.
 - The canonical occupancy map lives in `testbed_bringup/maps/`.
 
 ## Tested startup sequence
